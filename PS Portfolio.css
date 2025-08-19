@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@300;400;500;600;700;800;900&display=swap");
-
+/* General Styles */
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +6,7 @@
     text-decoration: none;
     border: none;
     outline: none;
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 :root {
@@ -32,6 +31,7 @@ body {
     overflow: hidden;
 }
 
+/* Book Wrapper */
 .wrapper {
     position: relative;
     width: 66rem;
@@ -52,6 +52,7 @@ body {
     }
 }
 
+/* Cover and Pages */
 .cover {
     position: absolute;
     top: 0;
@@ -99,6 +100,41 @@ body {
     box-shadow: -.6rem .6rem .6rem rgba(0, 0, 0, .1);
 }
 
+.book-page.page-right {
+    position: absolute;
+    right: 0;
+    transform-style: preserve-3d;
+    transform-origin: left;
+    transition: transform 0.8s ease-in-out;
+    z-index: 5;
+}
+
+.book-page.page-right.turn {
+    transform: rotateY(-180deg);
+}
+
+.book-page .page-front,
+.book-page .page-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--pages-color);
+    padding: 1.5rem 2rem;
+    backface-visibility: hidden;
+    border-radius: 0.3rem;
+}
+
+.book-page .page-front {
+    transform: rotateY(0deg) translateZ(1px);
+}
+
+.book-page .page-back {
+    transform: rotateY(180deg) translateZ(1px);
+}
+
+/* Content Sections */
 .profile-page {
     display: flex;
     flex-direction: column;
@@ -187,40 +223,6 @@ body {
     color: var(--white-color);
 }
 
-.book-page.page-right {
-    position: absolute;
-    right: 0;
-    transform-style: preserve-3d;
-    transform-origin: left;
-    transition: transform 0.8s ease-in-out;
-    z-index: 5;
-}
-
-.book-page.page-right.turn {
-    transform: rotateY(-180deg);
-}
-
-.book-page .page-front,
-.book-page .page-back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--pages-color);
-    padding: 1.5rem 2rem;
-    backface-visibility: hidden;
-    border-radius: 0.3rem;
-}
-
-.book-page .page-front {
-    transform: rotateY(0deg) translateZ(1px);
-}
-
-.book-page .page-back {
-    transform: rotateY(180deg) translateZ(1px);
-}
-
 .title {
     text-align: center;
     margin-bottom: 1rem;
@@ -254,40 +256,12 @@ body {
     margin-right: .4rem;
 }
 
-.number-page {
-    position: absolute;
-    bottom: 1.2rem;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.nextprev-btn {
-    position: absolute;
-    bottom: .9rem;
-    right: 1.5rem;
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
-    font-size: 2rem;
-    color: var(--second-text-color);
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    transition: .5s;
-}
-
-.nextprev-btn:hover {
-    color: var(--main-color);
-}
-
-.nextprev-btn.back {
-    left: 1.5rem;
-}
-
-.services-box {
+.services-box,
+.skills-box {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
+    margin-top: 1rem;
 }
 
 .services-box .services-content {
@@ -321,13 +295,7 @@ body {
     height: 2.5rem;
 }
 
-.skills-box {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-}
-
-.skills-box .skills-content {
+.skills-content {
     flex: 1 1 20rem;
 }
 
@@ -424,6 +392,10 @@ body {
 
 .contact-box {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .contact-box .field {
@@ -448,6 +420,37 @@ body {
 
 .contact-box .btn {
     cursor: pointer;
+}
+
+/* Navigation Buttons and Page Numbers */
+.number-page {
+    position: absolute;
+    bottom: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nextprev-btn {
+    position: absolute;
+    bottom: .9rem;
+    right: 1.5rem;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    font-size: 2rem;
+    color: var(--second-text-color);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: .5s;
+}
+
+.nextprev-btn:hover {
+    color: var(--main-color);
+}
+
+.nextprev-btn.back {
+    left: 1.5rem;
 }
 
 .back-profile {
@@ -489,7 +492,7 @@ body {
     top: -1.8rem;
 }
 
-/* Media Queries for Responsiveness */
+/* Mobile Responsiveness */
 @media (max-width: 1200px) {
     .wrapper {
         width: 100%;
@@ -514,34 +517,60 @@ body {
     body {
         min-height: auto;
         padding: 20px 0;
+        overflow-y: auto; /* Enable vertical scrolling */
+        overflow-x: hidden;
     }
 
     .wrapper {
         width: 95%;
         height: auto;
-        min-height: 80vh;
+        min-height: auto;
         padding: 1rem;
         animation: none;
+        perspective: none;
     }
-
-    .cover,
-    .book-page.page-right {
-        display: none;
-    }
-
-    .book .book-page.page-left {
-        width: 100%;
-        position: relative;
-        box-shadow: none;
-        padding: 1.5rem;
-    }
-
+    
     .book {
         flex-direction: column;
         height: auto;
-        min-height: 80vh;
+        min-height: auto;
+        display: block;
     }
 
+    .book-page {
+        position: relative;
+        width: 100%;
+        height: auto;
+        margin-bottom: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 0.6rem;
+        transform: none !important;
+        transform-style: flat;
+        transform-origin: center;
+        backface-visibility: visible;
+        display: block;
+        padding: 1.5rem;
+    }
+    
+    .book-page.page-left, .book-page.page-right {
+        box-shadow: none;
+        left: auto;
+        right: auto;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    
+    .book-page .page-back {
+        display: none; /* This is the key change to hide the back side of pages */
+    }
+    
+    .book-page .page-front {
+        position: relative;
+        transform: none;
+        backface-visibility: visible;
+        display: block;
+    }
+    
     .profile-page {
         height: auto;
         padding-bottom: 2rem;
@@ -556,17 +585,18 @@ body {
     }
     
     .btn-box {
-      flex-direction: column;
+        flex-direction: column;
     }
 
     .btn {
-      margin: 0.5rem 0;
+        margin: 0.5rem 0;
     }
-
+    
     .nextprev-btn,
     .back-profile,
-    .number-page {
-        display: none;
+    .number-page,
+    .cover {
+        display: none; /* Hide all navigation and cover elements on mobile */
     }
 }
 
@@ -580,7 +610,7 @@ body {
     }
     
     .portfolio-box .img-box {
-      height: 12rem;
+        height: 12rem;
     }
 
     .portfolio-box .info-box .info-title {
@@ -593,8 +623,8 @@ body {
     }
     
     .skills-content .content span {
-      width: 5rem;
-      height: 4rem;
+        width: 5rem;
+        height: 4rem;
     }
     
     .skills-content .content span i {
